@@ -7,7 +7,7 @@ module.exports =
     async InitUser() {
 
         console.log("========== Initialisation de l'utilisateur par defaut ==========");
-        const username = "admin";
+        const username = process.env.INIT_USERNAME || "admin";
         const userExist = User.findOne({
             where: { username: username }
         });

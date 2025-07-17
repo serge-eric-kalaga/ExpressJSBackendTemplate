@@ -30,7 +30,13 @@ const loggerMiddleware = (req, res, next) => {
 
     const endTime = new Date().toISOString();
 
-    const logString = `${startTime}${res?.user ? ' ' + res?.user.username + ' ===> ' : ''} ${method} ${url} | ${res.statusCode} | Durée: ${new Date(endTime) - new Date(startTime)}ms\n`;
+    const requestParams = req.params ? JSON.stringify(req.params) : '';
+    const requestQuery = req.query ? JSON.stringify(req.query) : '';
+    const requestBody = req.body ? JSON.stringify(req.body) : '';
+    const requestLogString = `\t===> Params: ${requestParams}\n\t===> Query: ${requestQuery}\n\t===> Body: ${requestBody}\n`;
+
+    const logString = `${startTime}\t${res?.user ? '===> User: ' + res?.user.username : ''}${method} ${url} | ${res.statusCode} | Durée: ${new Date(endTime) - new Date(startTime)}ms\n${requestLogString}`;
+
 
     if (url != "/metrics") {
       fs.appendFile(`${getLogFileName()}`, logString, (err) => {
@@ -38,13 +44,20 @@ const loggerMiddleware = (req, res, next) => {
           console.error('Erreur lors de l\'écriture du log dans le fichier', err);
         }
       });
+      fs.appendFile(`${getLogFileName()}`, "-------------------------------------------------------------------------\n", (err) => {
+        if (err) {
+          console.error('Erreur lors de l\'écriture du séparateur dans le fichier', err);
+        }
+      });
 
       if (res.statusCode >= 400) {
         logger.level = "error"
         logger.error(logString);
+        logger.error("-------------------------------------------------------------------------\n")
       }
       else {
-        logger.info(logString);
+        logger.debug(logString);
+        logger.debug("-------------------------------------------------------------------------\n")
       }
 
     }

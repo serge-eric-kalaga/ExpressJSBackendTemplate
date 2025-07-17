@@ -9,7 +9,8 @@ const DB = new Sequelize(
   {
     host: process.env.DATABASE_HOST,
     dialect: "mysql",
-    logging: logger.debug.bind(logger),
+    // logging: logger.debug.bind(logger),
+    logging: false, // Désactiver le logging de Sequelize
     // operatorsAliases: false,
     pool: {
       max: 5,
