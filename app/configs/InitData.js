@@ -14,9 +14,9 @@ module.exports =
         
         if (await userExist == null) {
             User.create({
-                username: username,
-                password: bcrypt.hashSync("admin", parseInt(process.env.UserPasswordSaltRound)),
-                nom_prenom: "Admin"
+                username: process.env.INIT_USERNAME || "admin",
+                password: bcrypt.hashSync(process.env.INIT_PASSWORD || "admin", parseInt(process.env.UserPasswordSaltRound)),
+                nom_prenom: "Admin ADMIN"
             }).then(async (value) => {
                 console.log("Initialisation de l'utilisateur par defaut ok !");
             }).catch(error => {
