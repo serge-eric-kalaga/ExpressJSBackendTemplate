@@ -28,20 +28,38 @@ Ce template ExpressJS vous permet de démarrer rapidement un backend Node.js ave
    ```
 
 2. **Configurez les variables d’environnement :**
-   Créez un fichier `.env` à la racine du projet, exemple :
-   ```
-   PORT=5000
-   DB_HOST=mysql
-   DB_USER=root
-   DB_PASSWORD=motdepasse
-   DB_NAME=expressjs_backend_template
-   INIT_USERNAME=admin
-   INIT_PASSWORD=admin
-   UserPasswordSaltRound=10
-   APP_NAME=ExpressJS Backend API
-   APP_VERSION=1.0.0
-   APP_DESCRIPTION=API documentation for the Fleet Service
-   ```
+   Duppliquez le fichier `app/.env.example` en `app/.env` et modifiez les valeurs selon vos besoins.
+   Exemple de contenu du fichier `.env` :
+      ```
+      # App
+      APP_NAME=ExpressJSBackendTemplate
+      PORT=5000
+      JWTKey=1234567890
+      UserPasswordSaltRound=5
+      DATABASE_URL=mysql2://root:1234567890@mysql_db:3333/expressjs_backend_template
+      LOG_LEVEL=debug
+      DATABASE_HOST=mysql_db
+      DATABASE_USER=root
+      # Utilisateur par defaut pour pour l'Application
+      INIT_USERNAME=admin
+      INIT_PASSWORD=admin
+
+      # MYSQL
+      MYSQL_ROOT_PASSWORD=1234567890
+      MYSQL_DATABASE=expressjs_backend_template
+      MYSQL_USER=serge
+      MYSQL_PASSWORD=1234567890
+
+      # PHPMYADMIN
+      PMA_HOST=mysql_db
+      PMA_PORT=3333
+      # PMA_USER=serge
+      # PMA_PASSWORD=1234567890
+
+      # Grafana
+      GF_SECURITY_ADMIN_USER=admin
+      GF_SECURITY_ADMIN_PASSWORD=1234567890
+      ```
 
 3. **Lancez le projet avec Docker Compose :**
    ```bash
@@ -82,9 +100,13 @@ ExpressJSBackendTemplate/
 ├── 🗂️ app/
 │   ├── ⚙️ configs/
 │   ├── 🧑‍💻 controllers/
+│   ├── 📜 logs/
 │   ├── 🛡️ middlewares/
 │   ├── 🗄️ models/
 │   ├── 🚦 routes/
+│   ├── 🧩 services/
+│   ├── 🧪 tests/
+│   ├── 📑 utils/
 │   └── 🏁 Index.js
 ├── 💾 data/
 │   └── 🐬 mysql/

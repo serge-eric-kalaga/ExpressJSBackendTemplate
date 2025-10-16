@@ -9,7 +9,7 @@ const options = {
     info: {
       title: process.env.APP_NAME || 'ExpressJS Backend API',
       version: process.env.APP_VERSION || '1.0.0',
-      description: process.env.APP_DESCRIPTION || 'API documentation for the Fleet Service',
+      description: process.env.APP_DESCRIPTION || 'Template for ExpressJS backend application',
     },
     servers: [
       {
