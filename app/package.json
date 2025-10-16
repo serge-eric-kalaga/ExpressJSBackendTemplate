@@ -19,6 +19,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.0",
+    "nodemailer": "^7.0.9",
     "nodemon": "3.1.10",
     "pino": "^9.6.0",
     "pino-http": "^10.4.0",
