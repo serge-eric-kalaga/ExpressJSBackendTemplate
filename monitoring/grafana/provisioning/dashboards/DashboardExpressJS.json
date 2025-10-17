@@ -95,7 +95,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(http_requests_total)",
+          "expr": "sum(nodejs_http_total_count)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,

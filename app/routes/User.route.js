@@ -33,6 +33,10 @@ const {
  *         password:
  *           type: string
  *           minLength: 4
+ *         role:
+ *           type: string
+ *           enum: [ADMIN, USER]
+ *           default: USER
  *       required:
  *         - nom_prenom
  *         - username
@@ -51,6 +55,10 @@ const {
  *         password:
  *           type: string
  *           minLength: 4
+ *         role:
+ *           type: string
+ *           enum: [ADMIN, USER]
+ *           default: USER
  *       required:
  *         - nom_prenom
  *         - username
@@ -69,6 +77,9 @@ const {
  *         password:
  *           type: string
  *           minLength: 4
+ *         role:
+ *           type: string
+ *           enum: [ADMIN, USER]
  */
 
 /**

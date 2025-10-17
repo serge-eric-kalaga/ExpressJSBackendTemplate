@@ -23,6 +23,11 @@ const User = DB.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    role: {
+      type: DataTypes.ENUM("ADMIN", "USER"),
+      allowNull: false,
+      defaultValue: "USER",
+    },
   },
   {}
 );
@@ -31,12 +36,14 @@ const CreateUserModel = Joi.object({
   nom_prenom: Joi.string().required().min(3).max(200),
   username: Joi.string().required().min(3).max(40).alphanum(),
   password: Joi.string().required().min(4),
+  role: Joi.string().valid("ADMIN", "USER").default("USER"),
 });
 
 const UpdateUserModel = Joi.object({
-  nom_prenom: Joi.string().min(3).max(200),
-  username: Joi.string().min(3).max(40).alphanum(),
-  password: Joi.string().min(4),
+  nom_prenom: Joi.string().min(3).max(200).optional(),
+  username: Joi.string().min(3).max(40).alphanum().optional(),
+  password: Joi.string().min(4).optional(),
+  role: Joi.string().valid("ADMIN", "USER").optional(),
 })
 
 module.exports = { User, CreateUserModel, UpdateUserModel };
