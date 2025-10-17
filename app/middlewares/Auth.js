@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = function LoginRequired(req, res, next){
+module.exports = function LoginRequired(req, res, next) {
     if (
         req.headers && req.headers.authorization &&
         req.headers.authorization.split(" ")[0] == "Bearer"
@@ -10,9 +10,9 @@ module.exports = function LoginRequired(req, res, next){
             // console.log(res.user);
             next()
         } catch (error) {
-            res.status(401).Response({message: error.message})
+            res.status(401).Response({ message: error.message })
         }
-    } else {                                                                                                                                                                         
-        res.status(401).Response({message: "Not authenticated !"})
-    }                                                                                                                                                                    
+    } else {
+        res.status(401).Response({ message: "Not authenticated !" })
+    }
 }

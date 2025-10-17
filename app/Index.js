@@ -11,11 +11,12 @@ const globalErrorHandler = require("./middlewares/ErrorHandler");
 const Response = require("./middlewares/Response");
 const { InitUser } = require("./configs/InitData");
 const swaggerSpec = require("./configs/Swagger");
+const { updateMetrics, Metrics } = require("./middlewares/Metrics");
 // ============ Fin Import Middlewares
 
 // ============ Import Routes
 const userRouter = require("./routes/User.route");
-const exempleRouter = require("./routes/Exemple.route"); 
+const exempleRouter = require("./routes/Exemple.route");
 // ============ Fin Import Routes
 
 
@@ -29,6 +30,7 @@ const app = express();
 // ============ Bloc Middlewares et Configurations
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(updateMetrics);
 app.use(loggerMiddleware);
 app.use(Response);
 // ============ Fin bloc Middlewares et Configurations
@@ -42,10 +44,10 @@ app.get("/", (req, res, next) => {
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec.swaggerSpec));
+app.get("/metrics", Metrics);
 
 app.use("/users", userRouter);
-app.use("/exemples", exempleRouter); 
-// app.use("/api-docs", swaggerRouter);
+app.use("/exemples", exempleRouter);
 
 
 // Route for testing error handling

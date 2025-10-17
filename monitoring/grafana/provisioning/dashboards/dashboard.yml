@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: "ExpressJS Dashboards"
+    orgId: 1
+    folder: "ExpressJS Monitoring"
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/dashboards

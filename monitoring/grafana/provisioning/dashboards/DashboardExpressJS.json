@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -52,7 +52,11 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -83,7 +87,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.2.0",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -91,7 +95,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(nodejs_http_total_count)",
+          "expr": "sum(http_requests_total)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -120,7 +124,7 @@
             "steps": [
               {
                 "color": "semi-dark-purple",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -137,8 +141,8 @@
       "id": 3,
       "options": {
         "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
+        "graphMode": "area",
+        "justifyMode": "center",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
@@ -155,7 +159,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.2.0",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -210,6 +214,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -225,7 +230,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -248,14 +253,15 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.2.0",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -263,7 +269,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum(rate(nodejs_http_response_time_bucket[5m])) by (le))\n",
+          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -291,7 +297,7 @@
             "steps": [
               {
                 "color": "semi-dark-blue",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -322,7 +328,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.2.0",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -392,7 +398,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -425,6 +431,7 @@
         "showValue": "auto",
         "stacking": "none",
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         },
@@ -432,7 +439,7 @@
         "xTickLabelRotation": 0,
         "xTickLabelSpacing": 0
       },
-      "pluginVersion": "6.3.0",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -482,7 +489,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -508,11 +515,12 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.2.0",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -531,7 +539,9 @@
       "type": "histogram"
     }
   ],
-  "schemaVersion": 39,
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": []
@@ -542,8 +552,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Dashboard Express JS (Magasin)",
-  "uid": "edwsspqdtbeo0e",
-  "version": 17,
-  "weekStart": ""
+  "title": "Dashboard Express JS",
+  "uid": "expressjs-dashboard",
+  "version": 1
 }
