@@ -8,20 +8,6 @@ services:
     volumes:
       - ./app:/app
       - /app/node_modules
-      # - ./app/configs:/app/configs
-      # - ./app/controllers:/app/controllers
-      # - ./app/middlewares:/app/middlewares
-      # - ./app/models:/app/models
-      # - ./app/routes:/app/routes
-      # - ./app/utils:/app/utils
-      # - ./app/logs:/app/logs
-      # - ./app/node_modules:/app/node_modules
-      # - ./app/.env:/app/.env
-      # - ./app/package.json:/app/package.json
-      # - ./app/package-lock.json:/app/package-lock.json
-      # - ./app/Index.js:/app/Index.js
-    # volumes:
-    #   - ./app:/app/
     expose:
       - 5000
     ports:
@@ -74,7 +60,6 @@ services:
       - mysql_db
     networks:
       - asgard
-
   # ====> Monitoring <====
 
   # grafana:

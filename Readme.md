@@ -15,6 +15,15 @@ Ce template ExpressJS vous permet de démarrer rapidement un backend Node.js ave
 - 🐳 Déploiement facile avec Docker & Docker Compose
 - 🧩 Middleware de réponse uniforme
 
+## 🧱 Composants inclus :
+- 🚀 Serveur ExpressJS avec configuration optimisée
+- 🗄️ Base de données MySQL containerisée
+- 🛠️ Interface PHPMyAdmin pour la gestion de la BDD
+- 📊 Stack de monitoring (Prometheus + Grafana + Node Exporter)
+- 🐳 Configuration Docker Compose prédéfinie
+
+C'est une solution clé-en-main pour démarrer un projet backend sécurisé et monitoré, idéal pour éviter de reconfigurer les éléments techniques récurrents à chaque nouveau projet.
+
 ## 🛠️ Prérequis
 
 - [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
