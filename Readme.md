@@ -102,6 +102,11 @@ Swagger est configuré dans [`app/configs/Swagger.js`](app/configs/Swagger.js).
 - **Grafana** : [http://localhost:3000](http://localhost:3000) (login par défaut : admin/admin)
 - **Node Exporter** : [http://localhost:9100/metrics](http://localhost:9100/metrics)
 
+## 📜 Logs
+
+Les logs de l'application sont disponibles dans le dossier `app/logs/`. Les niveaux de log peuvent être configurés via la variable d’environnement `LOG_LEVEL` dans le fichier `.env`.
+L'application enregistre les logs de façon structurée pour faciliter le débogage et la surveillance. Ainsi vous retrouverez un fichier de log par jour (Exemple `app/logs/2025-10-17.log`).
+
 ## 🗂️ Structure du projet
 
 ```text
@@ -157,13 +162,16 @@ Voir les routes dans [`app/routes/User.route.js`](app/routes/User.route.js) et l
 
 ## 🧪 Tests
 
-Ajoutez vos tests unitaires dans le dossier `tests/` (à créer si besoin).
+Ajoutez vos tests unitaires dans le dossier `app/tests/`.
 
 ## 🛠️ Personnalisation
 
 - Ajoutez vos routes dans `app/routes/`
 - Modifiez les modèles dans `app/models/`
 - Adaptez la configuration dans `app/configs/`
+- Ajoutez des middlewares dans `app/middlewares/`
+- Implémentez la logique métier dans `app/services/`
+- Utilisez `app/utils/` pour les fonctions utilitaires
 
 ## 🤝 Contribution
 
