@@ -34,14 +34,14 @@ const User = DB.define(
 
 const CreateUserModel = Joi.object({
   nom_prenom: Joi.string().required().min(3).max(200),
-  username: Joi.string().required().min(3).max(40).alphanum(),
+  username: Joi.string().required().min(3).max(40).allow(/[^a-zA-Z0-9]/),
   password: Joi.string().required().min(4),
   role: Joi.string().valid("ADMIN", "USER").default("USER"),
 });
 
 const UpdateUserModel = Joi.object({
   nom_prenom: Joi.string().min(3).max(200).optional(),
-  username: Joi.string().min(3).max(40).alphanum().optional(),
+  username: Joi.string().min(3).max(40).alphanum().optional().allow(/[^a-zA-Z0-9]/),
   password: Joi.string().min(4).optional(),
   role: Joi.string().valid("ADMIN", "USER").optional(),
 })

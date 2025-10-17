@@ -11,8 +11,6 @@ const {
   updateUser,
 } = require("../controllers/User.controller");
 
-
-
 /**
  * @swagger
  * components:
@@ -149,7 +147,7 @@ userRouter.delete("/:username", deleteUser);
 
 /**
  * @swagger
- * /users/auth/register:
+ * /users/auth/signup:
  *   post:
  *     summary: Crée un nouvel utilisateur
  *     tags:
@@ -170,7 +168,57 @@ userRouter.delete("/:username", deleteUser);
  *       400:
  *         description: Données invalides
  */
+userRouter.post("/auth/signup", createUser);
+
+/**
+ * @swagger
+ * /users/auth/register:
+ *   post:
+ *     summary: Crée un nouvel utilisateur
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateUserModel'
+ *     responses:
+ *       200:
+ *         description: Utilisateur créé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Données invalides
+ */
 userRouter.post("/auth/register", createUser);
+
+/**
+ * @swagger
+ * /users/:
+ *   post:
+ *     summary: Crée un nouvel utilisateur
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateUserModel'
+ *     responses:
+ *       200:
+ *         description: Utilisateur créé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Données invalides
+ */
+userRouter.post("/", createUser);
 
 /**
  * @swagger
@@ -178,7 +226,7 @@ userRouter.post("/auth/register", createUser);
  *   post:
  *     summary: Authentifie un utilisateur
  *     tags:
- *       - Users
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
@@ -200,6 +248,5 @@ userRouter.post("/auth/register", createUser);
  *         description: Identifiants invalides
  */
 userRouter.post("/auth/login", loginUser);
-
 
 module.exports = userRouter;

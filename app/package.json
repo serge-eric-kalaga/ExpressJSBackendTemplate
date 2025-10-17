@@ -5,16 +5,14 @@
   "main": "Index.js",
   "scripts": {
     "dev": "nodemon Index.js",
-    "test": "npx cypress open"
+    "test": "npx jest --runInBand --silent"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
-    "cypress": "^14.3.2",
     "dayjs": "^1.11.13",
-    "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
@@ -30,5 +28,16 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
+    "dotenv": "^17.2.3",
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/tests/jest.setup.js"
+    ]
   }
 }

@@ -11,8 +11,3 @@ module.exports = {
   CreateUserModel,
   UpdateUserModel,
 };
-
-DB.sync({ 
-  // force: true, 
-  alter: true
-});

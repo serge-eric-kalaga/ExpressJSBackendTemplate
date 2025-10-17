@@ -48,6 +48,21 @@ services:
     networks:
       - asgard
 
+  mysql_tests_db:
+    container_name: mysql_tests_db
+    image: mysql:9.2.0
+    restart: always
+    expose:
+      - 3334
+    ports:
+      - 3334:3306
+    env_file:
+      - ./app/.env.tests
+    volumes:
+      - ./data/mysql_tests/src:/var/lib/mysql
+    networks:
+      - asgard
+
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin:5.2.2

@@ -80,3 +80,5 @@ app.listen(PORT, "0.0.0.0", async () => {
     await InitUser();
   }, 5000);
 });
+
+module.exports = app;

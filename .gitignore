@@ -39,6 +39,7 @@ package-lock.json
 # docker database data
 data/mongo/*
 data/mysql/*
+data/mysql_tests/*
 data/postgres/*
 data/redis/*
 data/prometheus/*

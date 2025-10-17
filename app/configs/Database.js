@@ -8,6 +8,7 @@ const DB = new Sequelize(
   process.env.MYSQL_ROOT_PASSWORD,
   {
     host: process.env.DATABASE_HOST,
+    port: process.env.MYSQL_PORT || 3306,
     dialect: "mysql",
     // logging: logger.debug.bind(logger),
     logging: false, // Désactiver le logging de Sequelize
@@ -30,11 +31,12 @@ const connect_db = async () => {
       "=================> Base de données connectée ! <================="
     );
 
+    // Decomment according to your needs
     DB.sync({
-      alter: true,
+      // alter: true,
       // force: true,
     });
-    
+
     return DB;
   } catch (error) {
     logger.error(
@@ -42,7 +44,7 @@ const connect_db = async () => {
       error
     );
     console.log(error);
-    
+
     process.exit(1);
   }
 };

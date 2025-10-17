@@ -163,6 +163,12 @@ Voir les routes dans [`app/routes/User.route.js`](app/routes/User.route.js) et l
 ## 🧪 Tests
 
 Ajoutez vos tests unitaires dans le dossier `app/tests/`.
+N'oubliez pas de configurer votre environnement de test en modifiant le fichier `app/tests.env`.
+Les tests utilisent Jest pour le framework de test et Supertest pour les tests d'API.
+Pour exécuter les tests, utilisez la commande suivante :
+```bash
+npm test
+```
 
 ## 🛠️ Personnalisation
 
