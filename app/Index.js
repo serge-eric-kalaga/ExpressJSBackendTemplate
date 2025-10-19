@@ -48,19 +48,19 @@ app.use("/users", userRouter);
 app.use("/exemples", exempleRouter);
 
 
-// // Route for testing error handling
-// app.post("/error-test", (req, res, next) => {
-//   const error = new Error("Test Error");
-//   error.statusCode = 500;
-//   // next(error);
-//   throw error;
-// });
-// app.get("/error-test", (req, res, next) => {
-//   const error = new Error("Test Error");
-//   error.statusCode = 500;
-//   // next(error);
-//   throw error;
-// });
+// Route for testing error handling
+app.post("/error-test", (req, res, next) => {
+  const error = new Error("Test Error");
+  error.statusCode = 500;
+  // next(error);
+  throw error;
+});
+app.get("/error-test", (req, res, next) => {
+  const error = new Error("Test Error");
+  error.statusCode = 500;
+  // next(error);
+  throw error;
+});
 
 
 app.all("/", (req, res, next) => {
