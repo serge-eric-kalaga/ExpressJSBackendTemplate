@@ -14,6 +14,9 @@ Ce template ExpressJS vous permet de démarrer rapidement un backend Node.js ave
 - 📊 Monitoring avec Prometheus, Grafana & Node Exporter
 - 🐳 Déploiement facile avec Docker & Docker Compose
 - 🧩 Middleware de réponse uniforme
+- 🧪 Tests unitaires avec Jest & Supertest
+- 🔒 Sécurité renforcée avec Helmet et CORS
+- 📧 Mail service intégré avec Nodemailer
 
 ## 🧱 Composants inclus :
 - 🚀 Serveur ExpressJS avec configuration optimisée
@@ -37,7 +40,7 @@ C'est une solution clé-en-main pour démarrer un projet backend sécurisé et m
    ```
 
 2. **Configurez les variables d’environnement :**
-   Duppliquez le fichier `app/.env.example` en `app/.env` et modifiez les valeurs selon vos besoins.
+   Dupliquez le fichier `app/.env.example` en `app/.env` et modifiez les valeurs selon vos besoins.
    Exemple de contenu du fichier `.env` :
       ```
       # App
@@ -65,10 +68,25 @@ C'est une solution clé-en-main pour démarrer un projet backend sécurisé et m
       # PMA_USER=serge
       # PMA_PASSWORD=1234567890
 
-      # Grafana
-      GF_SECURITY_ADMIN_USER=admin
-      GF_SECURITY_ADMIN_PASSWORD=1234567890
-      ```
+   # Grafana
+   GF_SECURITY_ADMIN_USER=admin
+   GF_SECURITY_ADMIN_PASSWORD=1234567890
+
+   # Email SMTP (pour les notifications)
+   EMAIL_HOST=smtp.example.com
+   EMAIL_PORT=587
+   EMAIL_USERNAME=mon_compte
+   EMAIL_PASSWORD=mon_mot_de_passe
+   EMAIL_FROM="Mon App <no-reply@example.com>"
+
+   # Notifications d'erreur
+   ADMIN_EMAIL=admin1@example.com,admin2@example.com
+   ONCALL_EMAIL=oncall@example.com
+   LOGO_URL=https://via.placeholder.com/48
+   COMPANY_NAME=Ma Société
+   SERVICE_NAME=expressjs-backend
+   HOST=localhost
+   ```
 
 3. **Lancez le projet avec Docker Compose :**
    ```bash
@@ -86,7 +104,7 @@ Le fichier [`docker-compose.yaml`](./docker-compose.yaml) gère les services sui
 - **grafana** : Visualisation des métriques
 - **node-exporter** : Export des métriques système
 
-> ⚙️ Les configurations de Prometheus sont dans [`monitoring/prometheus.yml`](./monitoring/prometheus.yml).
+> ⚙️ Les configurations de Prometheus sont dans [`monitoring/prometheus/prometheus.yml`](./monitoring/prometheus/prometheus.yml).
 
 ## 📚 Documentation API
 
@@ -106,6 +124,10 @@ Swagger est configuré dans [`app/configs/Swagger.js`](app/configs/Swagger.js).
 
 Les logs de l'application sont disponibles dans le dossier `app/logs/`. Les niveaux de log peuvent être configurés via la variable d’environnement `LOG_LEVEL` dans le fichier `.env`.
 L'application enregistre les logs de façon structurée pour faciliter le débogage et la surveillance. Ainsi vous retrouverez un fichier de log par jour (Exemple `app/logs/2025-10-17.log`).
+
+## ✉️ Notifications d’erreur par email
+
+Lorsque le middleware global de gestion des erreurs détecte une erreur interne (HTTP 500), une notification email est envoyée automatiquement à tous les administrateurs listés dans `ADMIN_EMAIL`.
 
 ## 🗂️ Structure du projet
 
@@ -127,7 +149,7 @@ ExpressJSBackendTemplate/
 ├── 📈 monitoring/
 │   ├── 📊 prometheus.yml
 │   └── 📉 grafana/
-├── 🐳 docker-compose.yml
+├── 🐳 docker-compose.yaml
 ├── 📝 .env
 ├── 📦 package.json
 └── 📄 Readme.md
@@ -140,7 +162,7 @@ ExpressJSBackendTemplate/
 - `app/models/` : Modèles Sequelize
 - `data/mysql/` : Données et fichiers liés à MySQL
 - `monitoring/` : Fichiers de configuration Prometheus & Grafana
-- `docker-compose.yml` : Orchestration des services
+- `docker-compose.yaml` : Orchestration des services
 
 ## 👤 Initialisation de l’utilisateur par défaut
 
@@ -150,6 +172,8 @@ Au démarrage, le template crée automatiquement un utilisateur par défaut si a
 
 Les erreurs sont gérées globalement via le middleware [`ErrorHandler`](app/middlewares/ErrorHandler.js).  
 Un endpoint `/error-test` permet de tester la gestion des erreurs.
+
+En cas d’erreur interne (HTTP 500), si la configuration email est présente, une notification est envoyée automatiquement aux adresses définies dans `ADMIN_EMAIL`.
 
 ## 🧩 Middleware de réponse uniforme
 
