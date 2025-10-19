@@ -1,20 +1,15 @@
 const express = require("express");
-const userRouter = express.Router();
-
-
 const exempleRouter = express.Router();
 
-
 const {
-    getAllExemples,
-    getExempleById,
-    createExemple,
-    updateExemple,
-    deleteExemple,
-  } = require("../controllers/Exemple.controller");
+  getAllExemples,
+  getExempleById,
+  createExemple,
+  updateExemple,
+  deleteExemple,
+} = require("../controllers/Exemple.controller");
 
-
-  /**
+/**
  * @swagger
  * components:
  *   schemas:
@@ -68,6 +63,35 @@ const {
  *         description:
  *           type: string
  *           maxLength: 1000
+ *
+ *     # Schémas de réponse uniformisée (middleware Response)
+ *     ApiResponse:
+ *       type: object
+ *       properties:
+ *         statusCode:
+ *           type: integer
+ *           example: 200
+ *         message:
+ *           type: string
+ *           example: ok
+ *         data:
+ *           nullable: true
+ *     ApiResponseExemple:
+ *       allOf:
+ *         - $ref: '#/components/schemas/ApiResponse'
+ *         - type: object
+ *           properties:
+ *             data:
+ *               $ref: '#/components/schemas/Exemple'
+ *     ApiResponseExempleList:
+ *       allOf:
+ *         - $ref: '#/components/schemas/ApiResponse'
+ *         - type: object
+ *           properties:
+ *             data:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Exemple'
  */
 
 /**
@@ -83,9 +107,7 @@ const {
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Exemple'
+ *               $ref: '#/components/schemas/ApiResponseExempleList'
  */
 exempleRouter.get("/", getAllExemples);
 
@@ -108,9 +130,13 @@ exempleRouter.get("/", getAllExemples);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Exemple'
+ *               $ref: '#/components/schemas/ApiResponseExemple'
  *       400:
  *         description: Données invalides
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 exempleRouter.post("/", createExemple);
 
@@ -133,9 +159,13 @@ exempleRouter.post("/", createExemple);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Exemple'
+ *               $ref: '#/components/schemas/ApiResponseExemple'
  *       404:
  *         description: Exemple non trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 exempleRouter.get("/:id", getExempleById);
 
@@ -155,8 +185,16 @@ exempleRouter.get("/:id", getExempleById);
  *     responses:
  *       200:
  *         description: Exemple supprimé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  *       404:
  *         description: Exemple non trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 exempleRouter.delete("/:id", deleteExemple);
 
@@ -185,13 +223,20 @@ exempleRouter.delete("/:id", deleteExemple);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Exemple'
+ *               $ref: '#/components/schemas/ApiResponseExemple'
  *       400:
  *         description: Données invalides
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  *       404:
  *         description: Exemple non trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 exempleRouter.patch("/:id", updateExemple);
 
-  
 module.exports = exempleRouter;

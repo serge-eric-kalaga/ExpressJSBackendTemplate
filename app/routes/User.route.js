@@ -78,6 +78,49 @@ const {
  *         role:
  *           type: string
  *           enum: [ADMIN, USER]
+ *
+ *     # Schémas de réponse uniformisée (middleware Response)
+ *     ApiResponse:
+ *       type: object
+ *       properties:
+ *         statusCode:
+ *           type: integer
+ *           example: 200
+ *         message:
+ *           type: string
+ *           example: ok
+ *         data:
+ *           nullable: true
+ *     ApiResponseUser:
+ *       allOf:
+ *         - $ref: '#/components/schemas/ApiResponse'
+ *         - type: object
+ *           properties:
+ *             data:
+ *               $ref: '#/components/schemas/User'
+ *     ApiResponseUserList:
+ *       allOf:
+ *         - $ref: '#/components/schemas/ApiResponse'
+ *         - type: object
+ *           properties:
+ *             data:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *     AuthLoginData:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *         user:
+ *           $ref: '#/components/schemas/User'
+ *     ApiResponseAuthLogin:
+ *       allOf:
+ *         - $ref: '#/components/schemas/ApiResponse'
+ *         - type: object
+ *           properties:
+ *             data:
+ *               $ref: '#/components/schemas/AuthLoginData'
  */
 
 /**
@@ -93,9 +136,7 @@ const {
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/ApiResponseUserList'
  */
 userRouter.get("/", getAllUsers);
 
@@ -118,9 +159,13 @@ userRouter.get("/", getAllUsers);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/ApiResponseUser'
  *       404:
  *         description: Utilisateur non trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 userRouter.get("/:username", getUserByUsername);
 
@@ -140,8 +185,16 @@ userRouter.get("/:username", getUserByUsername);
  *     responses:
  *       200:
  *         description: Utilisateur supprimé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  *       404:
  *         description: Utilisateur non trouvé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 userRouter.delete("/:username", deleteUser);
 
@@ -164,9 +217,13 @@ userRouter.delete("/:username", deleteUser);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/ApiResponseUser'
  *       400:
  *         description: Données invalides
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 userRouter.post("/auth/signup", createUser);
 
@@ -189,9 +246,13 @@ userRouter.post("/auth/signup", createUser);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/ApiResponseUser'
  *       400:
  *         description: Données invalides
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 userRouter.post("/auth/register", createUser);
 
@@ -214,9 +275,13 @@ userRouter.post("/auth/register", createUser);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/ApiResponseUser'
  *       400:
  *         description: Données invalides
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 userRouter.post("/", createUser);
 
@@ -244,8 +309,16 @@ userRouter.post("/", createUser);
  *     responses:
  *       200:
  *         description: Authentification réussie
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponseAuthLogin'
  *       401:
  *         description: Identifiants invalides
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 userRouter.post("/auth/login", loginUser);
 
