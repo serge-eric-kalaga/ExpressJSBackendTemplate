@@ -1,9 +1,17 @@
 const Joi = require("joi");
 const sequelizeValidation = require("sequelize");
+const sendInternalErrorNotificationToAdmin = require("../services/Admin.service").sendInternalErrorNotificationToAdmin;
 
 function globalErrorHandler(err, req, res, next) {
   const errorMessage = err.message || "Something went wrong.";
   const statusCode = err.statusCode || 400;
+
+  // Send notification to admin on internal server errors
+  if (statusCode === 500) {
+    sendInternalErrorNotificationToAdmin(req, err).catch((error) => {
+      console.error("Failed to send internal error notification to admin:", error);
+    });
+  }
 
   if (err.name == "ValidationError") {
     res.status(400).json({
@@ -20,7 +28,7 @@ function globalErrorHandler(err, req, res, next) {
       details: err.errors,
     });
     return;
-  } else if (err.name == "SequelizeUniqueConstraintError") { 
+  } else if (err.name == "SequelizeUniqueConstraintError") {
     res.status(400).json({
       statusCode: statusCode,
       message: errorMessage,
@@ -30,8 +38,8 @@ function globalErrorHandler(err, req, res, next) {
     return;
   }
 
- 
-   else {
+
+  else {
     res.status(400).json({
       statusCode: statusCode,
       message: errorMessage,

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Erreur 500 — Notification d’erreur</title>
+    <style>
+        /* Dark mode support */
+        body {
+            Margin: 0;
+            padding: 0;
+            background: #0f1217;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #e5e7eb;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+                padding: 16px !important;
+            }
+
+            .hero-title {
+                font-size: 20px !important;
+            }
+
+            .content {
+                font-size: 14px !important;
+            }
+        }
+
+        a {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Preview text -->
+    <span
+        style="display:none;visibility:hidden;mso-hide:all;font-size:1px;color:#0f1217;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+        Erreur 500 détectée sur {{app_name}} — {{short_message}} — {{timestamp}}
+    </span>
+
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+            <td align="center" style="padding:24px 12px;">
+                <table class="container" width="600" cellpadding="0" cellspacing="0" role="presentation"
+                    style="width:600px;max-width:600px;background:#1c1f26;border-radius:8px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.4);">
+
+                    <!-- Header -->
+                    <tr>
+                        <td
+                            style="background: linear-gradient(90deg,#dc2626 0%, #f87171 100%); padding:20px 24px; color:#fff;">
+                            <h1 class="hero-title" style="Margin:0;font-size:22px;font-weight:700;">⚠️ Erreur 500 —
+                                Erreur interne du serveur</h1>
+                            <p style="Margin:6px 0 0;font-size:13px;opacity:0.95;">• {{app_name}}</p>
+                        </td>
+                    </tr>
+
+                    <!-- Corps -->
+                    <tr>
+                        <td style="padding:20px 24px;">
+                            <p style="Margin:0 0 12px;font-size:14px;color:#e5e7eb;">Bonjour,</p>
+                            <p style="Margin:0 0 16px;font-size:14px;color:#cbd5e1;">
+                                Une erreur interne (HTTP 500) s’est produite sur <strong>{{app_name}}</strong>.
+                                Voici les informations de la requête en cause :
+                            </p>
+
+                            <!-- Détails de la requête -->
+                            <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
+                                style="border-collapse:collapse;">
+                                <tr>
+                                    <td
+                                        style="padding:12px;background:#111317;border-radius:6px;border:1px solid #2a2f3a;">
+                                        <table width="100%" role="presentation">
+                                            <tr>
+                                                <td style="vertical-align:top;padding-right:12px;width:55%;">
+                                                    <p
+                                                        style="Margin:0 0 6px;font-weight:600;font-size:13px;color:#f3f4f6;">
+                                                        Date</p>
+                                                    <p style="Margin:0 0 10px;color:#9ca3af;font-size:13px;">
+                                                        {{timestamp}}</p>
+
+                                                    <p
+                                                        style="Margin:0 0 6px;font-weight:600;font-size:13px;color:#f3f4f6;">
+                                                        Méthode HTTP</p>
+                                                    <p style="Margin:0 0 10px;color:#9ca3af;font-size:13px;">
+                                                        {{http_method}}</p>
+
+                                                    <p
+                                                        style="Margin:0 0 6px;font-weight:600;font-size:13px;color:#f3f4f6;">
+                                                        Utilisateur</p>
+                                                    <p style="Margin:0 0 10px;color:#9ca3af;font-size:13px;">
+                                                        {{user_identifier}}</p>
+                                                </td>
+                                                <td style="vertical-align:top;padding-left:12px;width:45%;">
+                                                    <p
+                                                        style="Margin:0 0 6px;font-weight:600;font-size:13px;color:#f3f4f6;">
+                                                        URL</p>
+                                                    <p
+                                                        style="Margin:0 0 10px;color:#9ca3af;font-size:13px;word-break:break-all;">
+                                                        {{url}}</p>
+
+                                                    <p
+                                                        style="Margin:0 0 6px;font-weight:600;font-size:13px;color:#f3f4f6;">
+                                                        Adresse IP</p>
+                                                    <p style="Margin:0 0 10px;color:#9ca3af;font-size:13px;">
+                                                        {{client_ip}}</p>
+                                                    <p style="Margin:0;color:#9ca3af;font-size:13px;">{{host}}</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Corps de la requête -->
+                            <div style="margin-top:16px;">
+                                <p style="Margin:0 0 8px;font-weight:600;font-size:13px;color:#f3f4f6;">Corps de la
+                                    requête (body)</p>
+                                <pre
+                                    style="Margin:0;padding:12px;background:#111317;color:#cbd5e1;border-radius:6px;font-size:12px;overflow:auto;max-height:200px;line-height:1.4;border:1px solid #2a2f3a;">
+{{#if request_body}}
+{{request_body}}
+{{else}}
+Aucun corps envoyé.
+{{/if}}
+                </pre>
+                            </div>
+
+                            <!-- Stacktrace -->
+                            <div style="margin-top:16px;">
+                                <p style="Margin:0 0 8px;font-weight:600;font-size:13px;color:#f3f4f6;">Trace (extrait)
+                                </p>
+                                <pre
+                                    style="Margin:0;padding:12px;background:#0a0d11;color:#f1f5f9;border-radius:6px;font-size:12px;overflow:auto;max-height:240px;line-height:1.4;border:1px solid #2a2f3a;">
+{{stacktrace_excerpt}}
+                </pre>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td
+                            style="padding:18px 24px;background:#14181e;border-top:1px solid #2a2f3a;font-size:13px;color:#9ca3af;">
+                            <table width="100%" role="presentation">
+                                <tr>
+                                    <td style="vertical-align:middle;">
+                                        <p style="Margin:0;">
+                                            <strong style="color:#e5e7eb;">{{app_name}}</strong> • Environnement :
+                                            {{environment}}
+                                        </p>
+                                    </td>
+                                    <td align="right" style="vertical-align:middle;">
+                                        <img src="https://res.cloudinary.com/dtahnvo9f/image/upload/v1760874965/logo_backend_template.png"
+                                            alt="{{app_name}} logo" width="48" style="display:block;border-radius:6px;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <!-- Copyright -->
+                <table width="600" style="max-width:600px;margin-top:12px;" role="presentation">
+                    <tr>
+                        <td style="text-align:center;font-size:12px;color:#6b7280;">
+                            <p style="Margin:0;">© {{year}} — Notification d’erreur automatique</p>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
