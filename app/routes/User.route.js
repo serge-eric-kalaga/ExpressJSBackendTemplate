@@ -1,4 +1,5 @@
 const express = require("express");
+const { IsAdmin, LoginRequired } = require("../middlewares/Auth");
 
 const userRouter = express.Router();
 
@@ -138,7 +139,7 @@ const {
  *             schema:
  *               $ref: '#/components/schemas/ApiResponseUserList'
  */
-userRouter.get("/", getAllUsers);
+userRouter.get("/", LoginRequired, getAllUsers);
 
 /**
  * @swagger
@@ -167,7 +168,7 @@ userRouter.get("/", getAllUsers);
  *             schema:
  *               $ref: '#/components/schemas/ApiResponse'
  */
-userRouter.get("/:username", getUserByUsername);
+userRouter.get("/:username", LoginRequired, getUserByUsername);
 
 /**
  * @swagger
@@ -196,36 +197,8 @@ userRouter.get("/:username", getUserByUsername);
  *             schema:
  *               $ref: '#/components/schemas/ApiResponse'
  */
-userRouter.delete("/:username", deleteUser);
+userRouter.delete("/:username", IsAdmin, deleteUser);
 
-/**
- * @swagger
- * /users/auth/signup:
- *   post:
- *     summary: Crée un nouvel utilisateur
- *     tags:
- *       - Users
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/CreateUserModel'
- *     responses:
- *       200:
- *         description: Utilisateur créé
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ApiResponseUser'
- *       400:
- *         description: Données invalides
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ApiResponse'
- */
-userRouter.post("/auth/signup", createUser);
 
 /**
  * @swagger
@@ -254,7 +227,7 @@ userRouter.post("/auth/signup", createUser);
  *             schema:
  *               $ref: '#/components/schemas/ApiResponse'
  */
-userRouter.post("/auth/register", createUser);
+userRouter.post("/auth/register", IsAdmin, createUser);
 
 /**
  * @swagger
@@ -283,42 +256,39 @@ userRouter.post("/auth/register", createUser);
  *             schema:
  *               $ref: '#/components/schemas/ApiResponse'
  */
-userRouter.post("/", createUser);
+userRouter.post("/", IsAdmin, createUser);
 
 /**
  * @swagger
  * /users/auth/login:
  *   post:
- *     summary: Authentifie un utilisateur
- *     tags:
- *       - Auth
+ *     summary: 🔐 Authentification utilisateur
+ *     description: |
+ *       Permet de s'authentifier et récupérer un token JWT.
+ *       
+ *       **Comment utiliser:**
+ *       1. Exécutez cette requête avec vos identifiants
+ *       2. Copiez le `access_token` de la réponse
+ *       3. Cliquez sur le bouton "Authorize" 🔒 en haut à droite
+ *       4. Collez le token (sans "Bearer")
+ *       5. Cliquez sur "Authorize"
+ *     tags: [Auth]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               password:
- *                 type: string
- *             required:
- *               - username
- *               - password
+ *             $ref: '#/components/schemas/LoginRequest'
  *     responses:
  *       200:
  *         description: Authentification réussie
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ApiResponseAuthLogin'
+ *               $ref: '#/components/schemas/LoginResponse'
  *       401:
- *         description: Identifiants invalides
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ApiResponse'
+ *         $ref: '#/components/responses/UnauthorizedError'
  */
 userRouter.post("/auth/login", loginUser);
 

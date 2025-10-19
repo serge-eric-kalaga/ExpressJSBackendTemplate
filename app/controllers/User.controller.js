@@ -1,4 +1,4 @@
-const {User, CreateUserModel, UpdateUserModel} = require("../models/Models")
+const { User, CreateUserModel, UpdateUserModel } = require("../models/Models")
 const jsonwebtoken = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -49,7 +49,7 @@ module.exports = {
                 where: {
                     username: req.params.username
                 },
-                order: [["createdAt", "DESC"]], 
+                order: [["createdAt", "DESC"]],
                 attributes: ["id", "nom_prenom", "username", "createdAt", "updatedAt"]
             })
             if (!user) {
@@ -72,7 +72,7 @@ module.exports = {
             if (value == 0) {
                 res.status(404).Response({ message: "User not found !" })
             }
-            else{
+            else {
                 res.Response({ message: "User deleted !" })
             }
         }).catch(error => {
@@ -104,7 +104,6 @@ module.exports = {
 
     async loginUser(req, res) {
         try {
-            
             const user_exist = await User.findOne({
                 where: {
                     username: req.body.username,
@@ -112,37 +111,40 @@ module.exports = {
             });
 
             if (!user_exist) {
-                res.status(401).Response({ message: "Username or password incorrect !" })
+                return res.status(401).Response({ message: "Invalid credentials" });
             }
-            else {
 
-                const checkPassword = bcrypt.compareSync(req.body.password, user_exist.password)
+            // Vérifier le mot de passe
+            const isPasswordValid = bcrypt.compareSync(req.body.password, user_exist.password);
 
-                if (!checkPassword) {
-                    res.status(401).Response({ message: "Username or password incorrect !" })
-                }
-                else {
-                    const token = jsonwebtoken.sign({
-                        _id: user_exist._id,
-                        username: user_exist.username,
-                        fullname: user_exist.fullname
-                    }, process.env.JWTKey, { expiresIn: 3600 });
-
-                    // res.send(checkPassword)
-                    res.Response({
-                        data: {
-                            username: user_exist.username,
-                            fullname: user_exist.fullname,
-                            token: token
-                        }
-                    })
-
-                }
-
+            if (!isPasswordValid) {
+                return res.status(401).Response({ message: "Invalid credentials" });
             }
+
+            // Générer le token JWT
+            const token = jsonwebtoken.sign(
+                {
+                    id: user_exist.id,
+                    username: user_exist.username,
+                    nom_prenom: user_exist.nom_prenom,
+                    role: user_exist.role,
+                },
+                process.env.JWTKey,
+                { expiresIn: '24h' }
+            );
+
+            // Format OAuth2
+            res.Response({
+                data: {
+                    access_token: token,
+                    token_type: "Bearer",
+                    username: user_exist.username,
+                    nom_prenom: user_exist.nom_prenom
+                }
+            });
 
         } catch (error) {
-            res.status(400).Response({ message: error.message })
+            res.status(400).Response({ message: error.message });
         }
     }
 
